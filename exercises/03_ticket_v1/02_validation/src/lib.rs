@@ -33,7 +33,7 @@ impl Ticket {
         }
 
         // status validation
-        if status != "To-Do" && status && "In Progress" && status != "Done" {
+        if status != "To-Do" && status != "In Progress" && status != "Done" {
             panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed")
         }
 
@@ -53,7 +53,7 @@ mod tests {
     #[test]
     #[should_panic(expected = "Title cannot be empty")]
     fn title_cannot_be_empty() {
-        Ticket::new("4".into(), valid_description(), "To-Do2".into());
+        Ticket::new("".into(), valid_description(), "To-Do".into());
     }
 
     #[test]
