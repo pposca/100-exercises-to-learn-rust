@@ -3,7 +3,19 @@
 //  Don't perform any heap allocation. Don't leak any memory.
 
 pub fn sum(v: Vec<i32>) -> i32 {
-    todo!()
+    let break_index = v.len() / 2;
+    let (v1, v2) = v.split_at(break_index);
+
+    std::thread::scope(|scope| {
+        let handle1 = scope.spawn(|| { v1.iter().sum() });
+        let handle2 = scope.spawn(|| { v2.iter().sum() });
+
+        let result1: i32 = handle1.join().unwrap();
+        let result2: i32 = handle2.join().unwrap();
+
+        result1 + result2
+    })
+
 }
 
 #[cfg(test)]
